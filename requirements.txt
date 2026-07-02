@@ -1,0 +1,7 @@
+pdfplumber
+tiktoken
+sentence-transformers
+faiss-cpu
+groq
+python-dotenv
+streamlit

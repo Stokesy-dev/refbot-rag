@@ -1,0 +1,6 @@
+.env
+data/index/
+__pycache__/
+*.pyc
+.venv/
+test_results.md
