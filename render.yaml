@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: refbot
+    runtime: docker
+    repo: https://github.com/Stokesy-dev/refbot-rag
+    branch: main
+    plan: free
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false  # prompts you to enter the value on first deploy
