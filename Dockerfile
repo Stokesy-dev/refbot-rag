@@ -8,8 +8,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy and install Python dependencies first (layer caching)
+# Use CPU-only PyTorch to cut ~1.5 GB from the image
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/whl/cpu \
+    && pip install --no-cache-dir -r requirements.txt
+
+# Pre-download the embedding model at BUILD time so it's baked into the image.
+# This eliminates the ~90 MB download on every cold start.
+RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
 
 # Copy the rest of the application
 COPY . .
